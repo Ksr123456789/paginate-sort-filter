@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Advanced Form Validation with Search & Sort</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #f4f6f8;
+      }
+
+      h2 {
+        margin-bottom: 15px;
+      }
+
+      form {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 500px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+      }
+
+      .form-control {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      input[type="text"],
+      input[type="password"],
+      input[type="number"],
+      select {
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+      }
+
+      input[type="radio"] {
+        margin-right: 5px;
+      }
+
+      button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 5px;
+      }
+
+      button[type="submit"] {
+        background-color: #007bff;
+        color: white;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+
+      #addPhoneBtn {
+        background-color: #28a745;
+        color: white;
+      }
+
+      #addPhoneBtn:hover {
+        background-color: #1e7e34;
+      }
+
+      .remove-phone {
+        background-color: #dc3545;
+        color: white;
+        margin-left: 5px;
+      }
+
+      .remove-phone:hover {
+        background-color: #a71d2a;
+      }
+
+      .error {
+        color: red;
+        font-size: 12px;
+        margin-top: 3px;
+      }
+
+      .error-border {
+        border: 1px solid red !important;
+      }
+
+      .success-border {
+        border: 1px solid green !important;
+      }
+
+      .phone-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+
+      .phone-group input {
+        flex: 1;
+      }
+
+      table {
+        margin-top: 10px;
+        border-collapse: collapse;
+        width: 100%;
+        background: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #007bff;
+        color: white;
+      }
+
+      td button {
+        margin: 2px;
+        padding: 5px 8px;
+      }
+
+      #controls {
+        margin-bottom: 15px;
+      }
+
+      #controls input,
+      #controls select {
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>User Form</h2>
+
+    <form id="userForm">
+      <div class="form-control">
+        <label>Name</label>
+        <input type="text" id="name" />
+        <small class="error"></small>
+      </div>
+
+      <div class="form-control">
+        <label>Email</label>
+        <input type="text" id="email" />
+        <small class="error"></small>
+      </div>
+
+      <div class="form-control">
+        <label>Password</label>
+        <input type="password" id="password" />
+        <small class="error"></small>
+      </div>
+
+      <div class="form-control">
+        <label>Age</label>
+        <input type="number" id="age" />
+        <small class="error"></small>
+      </div>
+
+      <div class="form-control">
+        <label>Gender</label>
+        <div>
+          <input type="radio" name="gender" value="Male" /> Male
+          <input type="radio" name="gender" value="Female" /> Female
+          <input type="radio" name="gender" value="Other" /> Other
+        </div>
+        <small class="error" id="genderError"></small>
+      </div>
+
+      <div class="form-control">
+        <label>Phone Numbers</label>
+        <div id="phoneContainer"></div>
+        <button type="button" id="addPhoneBtn">Add Phone</button>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <h2>Users Table</h2>
+
+    <!-- Controls: Search + Filter + Sort -->
+    <div id="controls">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search name, email, phone"
+      />
+      <select id="genderFilter">
+        <option value="">All Genders</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+      Sort by:
+      <button onclick="sortTable('name')">Name</button>
+      <button onclick="sortTable('age')">Age</button>
+      <button onclick="sortTable('email')">Email</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Gender</th>
+          <th>Age</th>
+          <th>Phones</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <div id="pagination"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
